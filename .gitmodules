@@ -1,0 +1,6 @@
+[submodule "repos/UberGuidoZ_Flipper"]
+	path = repos/UberGuidoZ_Flipper
+	url = https://github.com/UberGuidoZ/Flipper.git
+[submodule "repos/UberGuidoZ_Flipper-IRDB"]
+	path = repos/UberGuidoZ_Flipper-IRDB
+	url = https://github.com/UberGuidoZ/Flipper-IRDB.git

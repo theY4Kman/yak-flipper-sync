@@ -1,8 +1,9 @@
 MAKEFILE_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 MAKEFILE_DIR := $(dir $(MAKEFILE_PATH))
-REPOS_DIR := $(shell dirname "${MAKEFILE_DIR}")
+REPOS_DIR := $(MAKEFILE_DIR)/repos
 
-REPOS := FlipperZeroSub-GHz UberGuidoZ_Flipper UberGuidoZ_Flipper-IRDB
+update-repos:
+	git submodule update --recursive --remote
 
 sync:
 	$(eval SYNC_DIR := $(abspath $(shell date +"sync_%Y%m%d_%H%M%S")))
@@ -14,6 +15,8 @@ sync:
 	rsync -ar --mkpath --exclude='*.md' "${REPOS_DIR}/UberGuidoZ_Flipper/Music_Player/" "${SYNC_DIR}/music_player"
 	rsync -ar --mkpath --exclude='*.md' "${REPOS_DIR}/UberGuidoZ_Flipper/BadUSB/" "${SYNC_DIR}/badusb"
 	rsync -ar --mkpath --exclude='*.md' "${REPOS_DIR}/UberGuidoZ_Flipper/picopass/" "${SYNC_DIR}/picopass"
-	rsync -ar --mkpath --exclude='*.md' "${REPOS_DIR}/UberGuidoZ_Flipper-IRDB/" "${SYNC_DIR}/infrared"
+	rsync -ar --mkpath --exclude='*.md' ${REPOS_DIR}/UberGuidoZ_Flipper-IRDB/* "${SYNC_DIR}/infrared/"
 
-	rsync -arv --mkpath "${SYNC_DIR}/" '/media/they4kman/FLIPPER SD'
+	rsync -arv --mkpath "${SYNC_DIR}/" "${SDCARD_PATH}"
+
+sync-latest: update-repos sync

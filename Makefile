@@ -17,6 +17,15 @@ sync:
 	rsync -ar --mkpath --exclude='*.md' "${REPOS_DIR}/UberGuidoZ_Flipper/picopass/" "${SYNC_DIR}/picopass"
 	rsync -ar --mkpath --exclude='*.md' ${REPOS_DIR}/UberGuidoZ_Flipper-IRDB/* "${SYNC_DIR}/infrared/"
 
-	rsync -arv --mkpath "${SYNC_DIR}/" "${SDCARD_PATH}"
+	rsync \
+		--archive \
+		--recursive \
+		--verbose \
+		--mkpath \
+		--inplace \
+		--times \
+		--stats \
+		--human-readable \
+		"${SYNC_DIR}/" "${SDCARD_PATH}"
 
 sync-latest: update-repos sync
